@@ -1,10 +1,7 @@
-#homework: go through the code and check if i understand everything. 
-#write down any questions and/or things i don't understand
-
 import cv2,sys,os,numpy
 size=4
 haar="haarcascade_frontalface_default.xml"
-dataset="Shakira"
+dataset="dataset"
 
 print("Recognising face, please remain in sufficient lighting...")
 
@@ -40,3 +37,12 @@ while True:
     resized=cv2.resize(face,(width,height))
     prediction=model.predict(resized)
     cv2.rectangle(img,(x,y),(x+w,y+h),(0,255,0),4)
+
+    if prediction[1]<500:
+      cv2.putText(img,"% s - %.0f" % (names[prediction[0]],prediction[1]),(x-10,y-10),cv2.FONT_HERSHEY_PLAIN,1,(0,255,0))
+    else:
+      cv2.putText(img,"not recognised",(x-10,y-10),cv2.FONT_HERSHEY_PLAIN,1,(0,255,0))
+  cv2.imshow("openCV",img)
+  key=cv2.waitKey(10)
+  if key==27:
+    break
